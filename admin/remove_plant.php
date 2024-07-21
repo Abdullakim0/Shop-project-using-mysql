@@ -3,16 +3,14 @@ global $conn;
 session_start();
 include 'db.php';
 
-// Check if the user is an admin
-if (!isset($_SESSION['username']) || !isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header("Location: login_user.php");
+if (!isset($_SESSION['role'] != 'admin') {
+    header("Location: admin.php");
     exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $plant_id = intval($_POST['plant_id']);
 
-    // Prepare SQL statement
     $stmt = $conn->prepare("DELETE FROM plants WHERE plant_id = ?");
     $stmt->bind_param("i", $plant_id);
 
