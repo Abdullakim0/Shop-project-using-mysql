@@ -1,1 +1,16 @@
+## Relations
 
+Suppliers Table 
+(each plant is supplied by one supplier, but a supplier can supply many plants)
+One-to-many relationship
+
+Categories Table 
+(each plant belongs to one category: Medical, Industrial, Gardening, etc.)
+One-to-many relationship
+
+Purposes Table (plants can have multiple purposes: many-to-many relationship)
+
+Plant_Purposes Table 
+(junction table for many-to-many relationship between Plants and Purposes)
+
+Many-to-Many Relationship: Plants to Purposes via Plant_Purposes.
