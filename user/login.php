@@ -1,7 +1,7 @@
 <?php
 global $conn;
 session_start();
-include 'db.php';  // Ensure this file contains your database connection logic
+include 'db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -18,9 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: admin.php");
         exit();
     }
-    // Prevent SQL Injection by using prepared statements
 
-    // Check user credentials
     $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -30,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // User found
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
-            // Login successful for user
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['username'] = $row['username'];
             $_SESSION['role'] = $row['role'];
