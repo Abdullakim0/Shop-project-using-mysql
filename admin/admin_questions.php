@@ -3,13 +3,11 @@ global $conn;
 session_start();
 include 'db.php';
 
-// Check if the user is an admin
-if (!isset($_SESSION['username']) || !isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header("Location: login.php");
+if (!isset($_SESSION['role'] != 'admin') {
+    header("Location: admin.php");
     exit();
 }
 
-// Fetch all questions and their respective answers
 $sql = "SELECT q.question_id, q.username, q.question, a.answer, a.answer_date
         FROM questions q
         LEFT JOIN answers a ON q.question_id = a.question_id";
