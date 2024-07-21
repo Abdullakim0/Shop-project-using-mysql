@@ -1,8 +1,7 @@
 <?php
-include 'login.php';  // Ensure this file contains your database connection logic
+include 'login.php';
 
-// Ensure the user is logged in and has the role 'user'
-if (!isset($_SESSION['username']) || $_SESSION['role'] != 'user') {
+if ($_SESSION['role'] != 'user') {
     header("Location: login.php");
     exit();
 }
