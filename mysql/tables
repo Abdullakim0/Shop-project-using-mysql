@@ -1,0 +1,80 @@
+-- Plant table
+CREATE TABLE Plants (
+    plant_id INT AUTO_INCREMENT PRIMARY KEY,
+    plant_name VARCHAR(100) NOT NULL,
+    description TEXT
+);
+
+-- Purpose table
+
+CREATE TABLE Purposes (
+    purpose_id INT AUTO_INCREMENT PRIMARY KEY,
+    purpose_name VARCHAR(100) NOT NULL
+);
+
+-- Plant puspose table
+
+CREATE TABLE Plant_Purposes (
+    plant_id INT,
+    purpose_id INT,
+    PRIMARY KEY (plant_id, purpose_id),
+    FOREIGN KEY (plant_id) REFERENCES Plants(plant_id),
+    FOREIGN KEY (purpose_id) REFERENCES Purposes(purpose_id)
+);
+
+
+-- Category table
+
+CREATE TABLE Categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(100) NOT NULL
+);
+
+-- Supplier table
+
+CREATE TABLE Suppliers (
+    supplier_id INT AUTO_INCREMENT PRIMARY KEY,
+    supplier_name VARCHAR(100) NOT NULL,
+    contact_info VARCHAR(255)
+);
+
+-- Establish relationship 
+
+ALTER TABLE Plants ADD category_id INT;
+ALTER TABLE Plants ADD CONSTRAINT FK_Category FOREIGN KEY (category_id) REFERENCES Categories(category_id);
+
+-- Add foreign key to plants for supplier
+
+ALTER TABLE Plants ADD supplier_id INT;
+ALTER TABLE Plants ADD CONSTRAINT FK_Supplier FOREIGN KEY (supplier_id) REFERENCES Suppliers(supplier_id);
+
+--inserting data
+
+INSERT INTO Categories (category_name) VALUES ('Medical');
+INSERT INTO Categories (category_name) VALUES ('Industrial');
+INSERT INTO Categories (category_name) VALUES ('Gardening');
+INSERT INTO Categories (category_name) VALUES ('Chemical');
+INSERT INTO Categories (category_name) VALUES ('Scientific');
+
+-- inserting suppliers table
+
+INSERT INTO Suppliers (supplier_name, contact_info) VALUES ('Supplier A', 'Contact A');
+INSERT INTO Suppliers (supplier_name, contact_info) VALUES ('Supplier B', 'Contact B');
+
+-- purpose table insertion
+
+INSERT INTO Purposes (purpose_name) VALUES ('Pain Relief');
+INSERT INTO Purposes (purpose_name) VALUES ('Cosmetic Use');
+INSERT INTO Purposes (purpose_name) VALUES ('Industrial Processing');
+
+--plant table data insertion
+
+INSERT INTO Plants (plant_name, description, category_id, supplier_id) VALUES ('Aloe Vera', 'Used for skin treatment', 1, 1);
+INSERT INTO Plants (plant_name, description, category_id, supplier_id) VALUES ('Lavender', 'Used for aroma therapy', 3, 2);
+
+-- plant purpose feeding data
+
+INSERT INTO Plant_Purposes (plant_id, purpose_id) VALUES (1, 1);  -- Aloe Vera for Pain Relief
+INSERT INTO Plant_Purposes (plant_id, purpose_id) VALUES (1, 2);  -- Aloe Vera for Cosmetic Use
+INSERT INTO Plant_Purposes (plant_id, purpose_id) VALUES (2, 2);  -- Lavender for Cosmetic Use
+INSERT INTO Plant_Purposes (plant_id, purpose_id) VALUES (2, 3);  -- Lavender for Industrial Processing
