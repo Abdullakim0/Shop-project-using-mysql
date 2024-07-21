@@ -8,7 +8,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Validate and sanitize category_id
 $category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0;
 
 if ($category_id === 0) {
