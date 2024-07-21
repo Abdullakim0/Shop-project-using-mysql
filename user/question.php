@@ -4,17 +4,14 @@ include 'db.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize input
     $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
     $question = filter_var($_POST['question'], FILTER_SANITIZE_STRING);
 
-    // Check if the inputs are valid
     if (empty($username) || empty($question)) {
         echo "Invalid input.";
         exit();
     }
 
-    // Prepare SQL statement to insert question
     $stmt = $conn->prepare("INSERT INTO questions (username, question) VALUES (?, ?)");
     $stmt->bind_param("ss", $username, $question);
 
