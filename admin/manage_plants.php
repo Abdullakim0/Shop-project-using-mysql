@@ -3,26 +3,20 @@ global $conn;
 session_start();
 include 'db.php';
 
-// Check if the user is an admin
 if (!isset($_SESSION['username']) || !isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     header("Location: login.php");
     exit();
 }
 
-// Fetch all plants
 $sql = "SELECT * FROM plants";
 $result = $conn->query($sql);
 
-// Fetch all categories
 $categories_result = $conn->query("SELECT * FROM categories");
 
-// Fetch all suppliers
 $suppliers_result = $conn->query("SELECT * FROM suppliers");
 
-// Fetch all products
 $products_result = $conn->query("SELECT * FROM products");
 
-// Fetch all orders
 $orders_result = $conn->query("
     SELECT o.order_id, a.username, p.product_name, s.supplier_name, o.quantity, o.order_date
     FROM orders o
@@ -51,7 +45,6 @@ $orders_result = $conn->query("
         <th>Actions</th>
     </tr>
     <?php while ($row = $result->fetch_assoc()) {
-        // Fetch category name
         $category_name = 'Unknown';
         if (!empty($row['category_id'])) {
             $cat_result = $conn->query("SELECT category_name FROM categories WHERE category_id = " . intval($row['category_id']));
@@ -60,7 +53,6 @@ $orders_result = $conn->query("
             }
         }
 
-        // Fetch supplier name
         $supplier_name = 'Unknown';
         if (!empty($row['supplier_id'])) {
             $sup_result = $conn->query("SELECT supplier_name FROM suppliers WHERE supplier_id = " . intval($row['supplier_id']));
@@ -122,7 +114,6 @@ $orders_result = $conn->query("
     <label for="supplier_id">Supplier:</label>
     <select id="supplier_id" name="supplier_id" required>
         <?php
-        // Debugging: Ensure suppliers_result is fetched again for correct display
         $suppliers_result = $conn->query("SELECT * FROM suppliers");
         if (!$suppliers_result) {
             die("Error fetching suppliers for order: " . $conn->error);
