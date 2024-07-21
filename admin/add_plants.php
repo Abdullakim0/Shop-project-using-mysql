@@ -3,9 +3,8 @@ global $conn;
 session_start();
 include 'db.php';
 
-// Check if the user is an admin
-if (!isset($_SESSION['username']) || !isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header("Location: login_user.php");
+if (!isset($_SESSION['role'] != 'admin') {
+    header("Location: manage_plants.php");
     exit();
 }
 
@@ -17,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Prepare SQL statement
     $stmt = $conn->prepare("INSERT INTO plants (plant_name, description, category_id, supplier_id) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssis", $plant_name, $description, $category_id, $supplier_id);
+    $stmt->bind_param("ssii", $plant_name, $description, $category_id, $supplier_id);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = "Plant added successfully!";
