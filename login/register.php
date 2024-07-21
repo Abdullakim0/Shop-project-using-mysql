@@ -7,11 +7,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
     $email = $_POST['email'];
     $full_name = $_POST['full_name'];
-    $role = (!empty($email)) ? 'user' : 'admin';  // Fix the ternary operator logic
 
-    $sql = "INSERT INTO users (username, password, email, full_name, role) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO users (username, password, email, full_name) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssss", $username, $password, $email, $full_name, $role);
+    $stmt->bind_param("sssss", $username, $password, $email, $full_name);
 
     if ($stmt->execute() === TRUE) {
         echo "Registration successful!";
